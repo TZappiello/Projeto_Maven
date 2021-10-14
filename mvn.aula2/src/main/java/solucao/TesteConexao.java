@@ -16,12 +16,8 @@ public class TesteConexao {
 
 		testar();
 		
-
-
-		System.out.println("Gostaria de inserir digite: '1', gostaria de Consultar '2' sair '3'");
-		
+		System.out.println("(Inserir Produtos digite->'1')   (Consultar Produtos digite->'2')   (sair->'3')");
 		String opcao_strg = sc.nextLine();
-		
 		int opcao = Integer.parseInt(opcao_strg);
 
 		
@@ -41,6 +37,7 @@ public class TesteConexao {
 			}
 		
 	}
+	
 
 	// Vai mostrar os dados da tabela
 	public static void mostrar() {
