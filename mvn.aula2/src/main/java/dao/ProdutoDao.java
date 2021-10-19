@@ -140,5 +140,28 @@ public class ProdutoDao {
 		}
 
 	}
+	//Deletar as linha na tabela---------------------------------------------------------
+	public void deletarDados (Produto p, int id) {
+		try {
+			
+			Conexao conexao = new Conexao();
+			
+			String sql = "DELETE FROM produto WHERE id =?";
 
+			PreparedStatement ps = conexao.getConexao().prepareStatement(sql);
+			
+			ps.setInt(1, id);
+			
+			ps.execute();
+			
+		}catch(Exception e) {
+			System.out.println("Erro ao alterar produtos " + e.getMessage());
+		}
+	}
 }
+
+
+
+
+
+

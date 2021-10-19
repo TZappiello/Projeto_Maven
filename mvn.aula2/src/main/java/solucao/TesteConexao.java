@@ -12,48 +12,66 @@ public class TesteConexao {
 
 	public static void main(String[] args) {
 
-		Scanner sc = new Scanner(System.in);
+		
 
 		testar();
+
+		// Pede as opçao de quais funcão quer
+		// fazer------------------------------------------------------
+
+		String continuar;
 		
+		do {
+			System.out.println("(1) Inserir Produtos-> :  ");
+			System.out.println("(2) Consultar Produtos-> : ");
+			System.out.println("(3) Consultar por nome-> : ");
+			System.out.println("(4) Alterar dados -> : ");
+			System.out.println("(5) Deletar Dados-> : ");
 
-// Pede as opçao de quais funcão quer fazer------------------------------------------------------
-		System.out.println("(1) Inserir Produtos-> :  ");
-		System.out.println("(2) Consultar Produtos-> : ");
-		System.out.println("(3) Consultar por nome-> : ");
-		System.out.println("(4) Alterar dados -> : ");
-		System.out.println("(5) Sair-> : ");
+			int opcao = sc.nextInt();
+
 		
-		int opcao = sc.nextInt();
+			switch (opcao) {
 
-		switch (opcao) {
-
-		case 1:
-			inserirDados();
-			break;
-
-		case 2:
-			mostrar();
-			break;
-
-		case 3:
-			mostrarNome();
-			break;
-
-		case 4:
-			mudarDados();
-			break;
+			case 1:
+				inserirDados();
+				break;
+				
+			case 2:
+				mostrar();
+				break;
+		
+			case 3:
+				mostrarNome();
+				
+				break;
+				
+			case 4:
+				mudarDados();
+				break;
+				
+			case 5:
+				deletarDados();
+				break;
+								
+			} 
 			
-		case 5:
-			System.out.println("Saindo....");
-			break;
+			System.out.println("************************************");
+			System.out.println("Deseja continuar? S = Sim ou N = Não");
+			continuar = sc.next();
+			
 
-		default:
-			System.out.println("Erro na Escolha");
-		}
-
+		
+		} //while (continuar.equals("S") || continuar.equals("s"));
+		
+		while (continuar.equalsIgnoreCase("S"));
+		
+		System.out.println("Saindo...");
+		
 	}
-
+	//Metodo para nao precisar ficar chamando o SC
+	static Scanner sc = new Scanner(System.in);
+	
 	public static void mostrarNome() {
 
 		List<Produto> produtos = new ArrayList<Produto>();
@@ -76,7 +94,7 @@ public class TesteConexao {
 			System.out.println("Data de cadastro do Produto: " + produtos.get(i).getDataCadastro());
 
 			System.out.println("*************");
-		
+
 			cont++;
 			System.out.println("Total da pesquisa: " + cont);
 
@@ -124,7 +142,8 @@ public class TesteConexao {
 
 // Colocar dados na tabela-------------------------------------------------------
 	public static void inserirDados() {
-		Scanner sc = new Scanner(System.in);
+		
+		
 
 		Produto p = new Produto();
 
@@ -161,44 +180,103 @@ public class TesteConexao {
 
 //Mudar os dados do produto a ser mudado---------------------------------------------
 	public static void mudarDados() {
-		Scanner sc = new Scanner(System.in);
+		
+		List<Produto> produto = new ArrayList<Produto>();
+
+		ProdutoDao dao = new ProdutoDao();
+
+		produto = dao.buscarTodos();
 		
 		
+
 		Produto p = new Produto();
 		System.out.println("------------Alterar Poduto--------------");
 		System.out.println("----------------------------------------");
-		
-		
-		System.out.println("Digite o nome do produto para alterar ");
-		p.setNome(sc.nextLine());
-		
-		
-		System.out.println("Digite o preço para alterar ");
-		p.setPreco(sc.nextDouble());
-		
-		
-		System.out.println("Digite o quantidade do produto para alterar ");
-		p.setQuantidade(sc.nextInt());
-		
-		
-		System.out.println("Digite a data de validade do produto para alterar ");
-		String dataValidade = sc.next();
-		
-		Date dataV = Date.valueOf(dataValidade);
-		p.setDataValidade(dataV);
-		
-		p.setDataCadastro(new Date(System.currentTimeMillis()));
+
 		
 		System.out.println("Digite o id do produto para alterar ");
 		int id = sc.nextInt();
 		sc.nextLine();
 		
+		System.out.println("Quer Alterar o nome? S= Sim N= Não ");
+		String m = sc.nextLine();
+		
+		if(m.equals("S")) {
+			System.out.println("Digite o Nome Novo:");
+			p.setNome(sc.nextLine());
+			
+		}else if (m.equals("N")) {
+			p.setNome(produto.get(id-1).getNome());
+		}
+				
+		
+		System.out.println("Quer alterar o preço? S= Sim N= Não ");
+		String m1 = sc.nextLine();
+		
+		if (m1.equals("S")) {
+			System.out.println("Digite o novo Preço: ");
+			p.setPreco(sc.nextDouble());
+			
+		
+		}else if (m1.equals("N")) {
+			p.setPreco(produto.get(id-1).getPreco());
+		}
+		
+		System.out.println("Quer alterar a quantidade? S= Sim N= Não ");
+		String m3 = sc.nextLine();
+		
+		if (m3.equals("S")) {
+			System.out.println("Digite a nova quantidade: ");
+			p.setQuantidade(sc.nextInt());
+			
+		} else if (m3.equals("N")) {
+			p.setQuantidade(produto.get(id-1).getQuantidade());
+		}
+		
+		
+		System.out.println("Alterar a Data Validade? ");
+		String dataValidade = sc.next();
+		Date dataV = Date.valueOf(dataValidade);
+		p.setDataValidade(dataV);
+		
+//		if (m4.equals("S")) {
+//			System.out.println("Digite a nova Data: ");	
+//			String dataValidade = sc.next();
+//			Date dataV = Date.valueOf(dataValidade);
+//			p.setDataValidade(dataV);
+//			
+//		}else if (m4.equals("N")) {
+//			p.setDataValidade(produto.get(id-1).getDataValidade());
+//		}
+		
+		//String dataValidade = sc.next();
+
+		//Date dataV = Date.valueOf(dataValidade);
+		//p.setDataValidade(dataV);
+
+		p.setDataCadastro(new Date(System.currentTimeMillis()));
+
+
 		System.out.println("---------Poduto alterado OK!!!----------");
 		System.out.println("----------------------------------------");
+		
+
+		dao.mudarDados(p, id);
+
+	}
+	//Deleta a linha----------------------------------------------------------
+	public static void deletarDados() {
+		
+		Produto p = new Produto();
+		System.out.println("Coloque o ID do produto para deletar");
+		int id = sc.nextInt();
+		
 		ProdutoDao dao = new ProdutoDao();
 		
-		dao.mudarDados(p, id);
+		System.out.println("---------Poduto Deletado OK!!!----------");
 		
-		}
-
+		dao.deletarDados(p, id);
+		
+	}
+	
 }
